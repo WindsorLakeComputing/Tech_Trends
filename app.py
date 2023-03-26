@@ -3,11 +3,14 @@ import sqlite3
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 
+
+
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    app.connection_count = app.connection_count + 1
     return connection
 
 # Function to get a post using its ID
@@ -18,9 +21,16 @@ def get_post(post_id):
     connection.close()
     return post
 
+def get_post_count():
+    connection = get_db_connection()
+    count = connection.execute('SELECT COUNT(id) FROM posts').fetchone()
+    connection.close()
+    return count[0]
+
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
+app.connection_count = 0
 
 # Define the main route of the web application 
 @app.route('/')
@@ -44,6 +54,28 @@ def post(post_id):
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+#
+@app.route('/healthz')
+def healthz():
+    response = app.response_class(
+        response=json.dumps({"result":"OK - healthy"}),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+@app.route('/metrics')
+def metrics():
+    response = app.response_class(
+        response=json.dumps({"db_connection_count":get_connection_count(),"post_count":get_post_count()},),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+def get_connection_count():
+    return app.connection_count
 
 # Define the post creation functionality 
 @app.route('/create', methods=('GET', 'POST'))
