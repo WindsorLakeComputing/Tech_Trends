@@ -2,6 +2,8 @@ import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
+import logging
+from datetime import datetime
 
 
 
@@ -46,13 +48,16 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+      app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]Article with post_id of {post_id} doesn't exist!")
       return render_template('404.html'), 404
     else:
+      app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}], Article \" post.title\" retrieved!")
       return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]GET /metrics HTTP/1.1\" 200 -")
     return render_template('about.html')
 
 #
@@ -87,6 +92,7 @@ def create():
         if not title:
             flash('Title is required!')
         else:
+            app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]The new article {title} is created")
             connection = get_db_connection()
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
                          (title, content))
@@ -99,4 +105,5 @@ def create():
 
 # start the application on port 3111
 if __name__ == "__main__":
+   logging.basicConfig(filename='app.log',level=logging.DEBUG)
    app.run(host='0.0.0.0', port='3111')
