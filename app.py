@@ -47,6 +47,7 @@ def index():
 @app.route('/<int:post_id>')
 def post(post_id):
     post = get_post(post_id)
+    print("HELLO")
     if post is None:
       app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]Article with post_id of {post_id} doesn't exist!")
       return render_template('404.html'), 404
@@ -105,5 +106,5 @@ def create():
 
 # start the application on port 3111
 if __name__ == "__main__":
-   logging.basicConfig(filename='app.log',level=logging.DEBUG)
+   logging.basicConfig(filename='app.log',level=logging.INFO)
    app.run(host='0.0.0.0', port='3111')
