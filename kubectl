@@ -1,0 +1,37 @@
+kubectl create deploy go-helloworld --image=sudkul/go-helloworld:v1.0.0
+
+
+kubectl create deploy tech-trends --image=bjk1456/tech-trends:latest
+
+
+kubectl create deploy trends --image=bjk1456/tech-trends:v1.0.0
+
+
+# Copy the commands from https://k3s.io/ to install the Lightweight Kubernetes in the Vagrant VM
+curl -sfL https://get.k3s.io | sh -
+# Switch the user to become root
+sudo su
+k3s kubectl get node
+
+
+
+
+kubectl get po -o wide -n sandbox
+
+
+
+curl -sfL https://get.k3s.io | sh -
+sudo su
+k3s kubectl get node
+
+
+
+
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+
+
+
+
+
