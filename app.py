@@ -3,6 +3,7 @@ import sqlite3
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 import logging
+import sys
 from datetime import datetime
 
 
@@ -33,6 +34,8 @@ def get_post_count():
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
 app.connection_count = 0
+stdout_fileno = sys.stdout
+stderr_fileno = sys.stderr
 
 # Define the main route of the web application 
 @app.route('/')
@@ -47,18 +50,23 @@ def index():
 @app.route('/<int:post_id>')
 def post(post_id):
     post = get_post(post_id)
-    print("HELLO")
     if post is None:
-      app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]Article with post_id of {post_id} doesn't exist!")
+      none_text = f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]Article with post_id of {post_id} doesn't exist!"
+      stderr_fileno.write(none_text)
+      stdout_fileno.write(none_text + '\n')
       return render_template('404.html'), 404
     else:
-      app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}], Article \" post.title\" retrieved!")
+      article_text = f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}], Article {post['title']} retrieved!"
+      app.logger.info(article_text)
+      stdout_fileno.write(article_text)
       return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
-    app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]GET /metrics HTTP/1.1\" 200 -")
+    about_text = f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]GET /metrics HTTP/1.1\" 200 -"
+    app.logger.info(about_text)
+    stdout_fileno.write(about_text + '\n')
     return render_template('about.html')
 
 #
@@ -93,7 +101,9 @@ def create():
         if not title:
             flash('Title is required!')
         else:
-            app.logger.info(f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]The new article {title} is created")
+            new_article = f"INFO:app:[{datetime.now().isoformat(timespec='minutes')}]The new article {title} is created"
+            app.logger.info(new_article)
+            stdout_fileno.write(new_article + '\n')
             connection = get_db_connection()
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
                          (title, content))
