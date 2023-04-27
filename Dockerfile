@@ -10,9 +10,12 @@ WORKDIR /app
 # run commands within the container. 
 # For example, invoke a pip command 
 # to install dependencies defined in the requirements.txt file. 
+
+ADD . .
+
 RUN pip install -r requirements.txt
 
-EXPOSE 3111
+EXPOSE 7111
 # provide a command to run on container start. 
 # For example, start the `app.py` application.
 CMD [ "python", "app.py" ]
