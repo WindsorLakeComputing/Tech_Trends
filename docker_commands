@@ -1,0 +1,18 @@
+## Docker commands used to build the application 
+sudo docker build -t tech-trends .
+
+## Docker commands used to run the application
+docker run -d -p 7111:7111 tech-trends
+
+## Docker commands used to get the application logs
+sudo docker logs dazzling_faraday
+
+## Logs from the container running the TechTrends application
+
+kelbenj@pop-os:~/Udacity/Tech_Trends$ sudo docker logs dazzling_faraday
+[sudo] password for kelbenj: 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
