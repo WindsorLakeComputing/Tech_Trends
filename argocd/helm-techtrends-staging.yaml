@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: techtrends-staging
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  source:
+    path: helm
+    repoURL: https://github.com/bjk1456/Tech_Trends
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values-staging.yaml
+  project: default
+  syncPolicy:
+    automated: null

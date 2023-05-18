@@ -26,12 +26,26 @@ k3s kubectl get node
 
 
 
+kubectl get no
+
+
+
 
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+kubectl get po -n argocd
+kubectl get svc -n argocd
+kubectl get svc -n argocd argocd-server -o yaml > argocd-nodeport.yaml
 
 
+
+kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath='{.data.*}' | base64 -d
+
+Ox-R1AfmYlNiAhKT
+
+
+NoBIumnGqod9Nst2
 
 
 
