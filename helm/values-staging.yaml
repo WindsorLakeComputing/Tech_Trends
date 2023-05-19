@@ -29,7 +29,7 @@ service:
 
 image:
   repository: bjk1456/techtrends
-  tag: latest
+  tag: v1.0.0
   pullPolicy: IfNotPresent
 
 containerPort: 3111
@@ -51,3 +51,6 @@ resources:
   limits:
     cpu: "500m"
     memory: "128Mi"
+
+
+    
