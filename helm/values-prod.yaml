@@ -16,10 +16,10 @@ replicaCount: 1
 
 resources:
   requests:
-    cpu: 64m
-    memory: 250Mi
+    cpu: 350m
+    memory: 128Mi
   limit:
-    memory: 128Mi 
+    memory: 256Mi 
     cpu: 500m
 
 configmap:
