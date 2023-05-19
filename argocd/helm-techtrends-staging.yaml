@@ -8,7 +8,7 @@ spec:
     server: https://kubernetes.default.svc
   source:
     path: helm
-    repoURL: https://github.com/bjk1456/Tech_Trends
+    repoURL: https://github.com/bjk1456/Tech_Trends.git
     targetRevision: HEAD
     helm:
       valueFiles:

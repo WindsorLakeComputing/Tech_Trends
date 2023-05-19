@@ -42,10 +42,7 @@ kubectl get svc -n argocd argocd-server -o yaml > argocd-nodeport.yaml
 
 kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath='{.data.*}' | base64 -d
 
-Ox-R1AfmYlNiAhKT
-
-
-NoBIumnGqod9Nst2
+1l8ezAlU8GYCROkc
 
 
 

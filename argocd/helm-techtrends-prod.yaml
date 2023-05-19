@@ -1,19 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: techtrends-prod
+  name: nginx-prod
+  namespace: argocd
 spec:
   destination:
-    name: ''
-    namespace: argocd
-    server: 'https://kubernetes.default.svc'
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
   source:
-    path: helm
-    repoURL: 'https://github.com/bjk1456/Tech_Trends.git'
-    targetRevision: HEAD
     helm:
       valueFiles:
-        - values-prod.yaml
-  project: default
-  syncPolicy:
-    automated: null
+      - values-prod.yaml
+    path: helm
+    repoURL: https://github.com/bjk1456/Tech_Trends
+    targetRevision: HEAD
