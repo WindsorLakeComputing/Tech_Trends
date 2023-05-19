@@ -28,8 +28,8 @@ service:
   type: ClusterIP
 
 image:
-  repository: bjk1456/techtrends
-  tag: v1.0.0
+  repository: bjk1456/tech-trends
+  tag: latest
   pullPolicy: IfNotPresent
 
 containerPort: 3111
