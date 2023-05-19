@@ -8,7 +8,7 @@ service:
 
 
 image:
-  repository: techtrends 
+  repository: bjk1456/techtrends 
   tag: latest
   pullPolicy: IfNotPresent
 
